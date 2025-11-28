@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Python + HTML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aplikasi Python Backend + HTML Frontend </h1>
+    
+    <!-- Kalkulator Sederhana -->
+    <div class="container">
+        <h2>Kalkulator</h2>
+        <input type="number" id="angka1" placeholder="Angka 1">
+        <input type="number" id="angka2" placeholder="Angka 2">
+        <button onclick="hitung()">Hitung Jumlah</button>
+        <div id="hasilKalkulator" class="result"></div>
+    </div>
+
+    <!-- Processing Text -->
+    <div class="container">
+        <h2>Processing Text</h2>
+        <textarea id="inputText" rows="4" cols="50" placeholder="Masukkan teks di sini..."></textarea>
+        <br>
+        <button onclick="processText()">Process Text</button>
+        <div id="hasilText" class="result"></div>
+    </div>
+
+    <script>
+        // Fungsi untuk kalkulator
+        async function hitung() {
+            const angka1 = document.getElementById('angka1').value;
+            const angka2 = document.getElementById('angka2').value;
+            
+            const response = await fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    angka1: angka1,
+                    angka2: angka2
+                })
+            });
+            
+            const data = await response.json();
+            document.getElementById('hasilKalkulator').innerHTML = 
+                `Hasil: ${data.result}`;
+        }
+
+        // Fungsi untuk processing text
+        async function processText() {
+            const text = document.getElementById('inputText').value;
+            
+            const response = await fetch('/process-text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: text
+                })
+            });
+            
+            const data = await response.json();
+            document.getElementById('hasilText').innerHTML = 
+                `Jumlah Kata: ${data.jumlah_kata}<br>
+                 Text Uppercase: ${data.text_upper}`;
+        }
+    </script>
+</body>
+</html>
