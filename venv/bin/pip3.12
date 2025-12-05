@@ -1,4 +1,4 @@
-#!/media/direta-ramandha-p/DATA1/MateriKuliah/Materi/Praktek/project/Semester_1/myapp/venv/bin/python3
+#!/media/direta-ramandha-p/DATA1/MateriKuliah/Materi/Praktek/project/Semester_1/DiagnosaPenyakit/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

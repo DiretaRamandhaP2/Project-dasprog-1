@@ -1,96 +1,320 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Python + HTML</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-        }
-        .result {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 3px;
-        }
-    </style>
+    <title>Sistem Diagnosis Penyakit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Aplikasi Python Backend + HTML Frontend </h1>
-    
-    <!-- Kalkulator Sederhana -->
-    <div class="container">
-        <h2>Kalkulator</h2>
-        <input type="number" id="angka1" placeholder="Angka 1">
-        <input type="number" id="angka2" placeholder="Angka 2">
-        <button onclick="hitung()">Hitung Jumlah</button>
-        <div id="hasilKalkulator" class="result"></div>
-    </div>
 
-    <!-- Processing Text -->
-    <div class="container">
-        <h2>Processing Text</h2>
-        <textarea id="inputText" rows="4" cols="50" placeholder="Masukkan teks di sini..."></textarea>
-        <br>
-        <button onclick="processText()">Process Text</button>
-        <div id="hasilText" class="result"></div>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <i class="fas fa-stethoscope text-blue-600 text-2xl mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-900">Sistem Diagnosis Penyakit</h1>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <i class="fas fa-laptop-code mr-2"></i>
+                    AI Diagnosis System
+                </div>
+                <!-- Di dalam header, tambahkan tombol ini -->
+                <div class="flex space-x-4">
+                    <a href="/riwayat-pasien"
+                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition duration-200 flex items-center">
+                        <i class="fas fa-history mr-2"></i>
+                        Riwayat Pasien
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                Diagnosis Penyakit Berdasarkan Gejala
+            </h2>
+            <p class="text-lg text-gray-600 mb-2">
+                Masukkan data pasien dan gejala untuk mendapatkan diagnosis penyakit
+            </p>
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 inline-block">
+                <p class="text-yellow-800 text-sm">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Sistem dapat mendiagnosa: Flu, Demam Berdarah, Tifus, Maag, Diare
+                </p>
+            </div>
+        </div>
+
+        <!-- Diagnosis Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-user-plus text-blue-600 text-xl mr-3"></i>
+                <h3 class="text-xl font-semibold text-gray-800">Data Pasien</h3>
+            </div>
+
+            <!-- Patient Information -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-2"></i>Nama Pasien
+                    </label>
+                    <input type="text" id="namaPasien" placeholder="Nama lengkap pasien"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-calendar-alt mr-2"></i>Umur Pasien
+                    </label>
+                    <input type="number" id="umurPasien" placeholder="Umur dalam tahun"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-ruler-vertical mr-2"></i>Tinggi Badan (cm)
+                    </label>
+                    <input type="number" id="tinggiPasien" placeholder="Tinggi dalam cm"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <!-- Symptoms Input -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-clipboard-list mr-2"></i>Gejala yang Dialami
+                </label>
+                <textarea id="gejalaInput" rows="4"
+                    placeholder="Masukkan gejala yang dialami (pisahkan dengan koma). Contoh: demam, batuk, sakit kepala, mual"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <div class="mt-2 text-sm text-gray-600">
+                    <p class="font-medium mb-1">Contoh gejala yang bisa dimasukkan:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                        <span class="bg-gray-100 px-2 py-1 rounded">demam</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">batuk</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">pilek</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">sakit kepala</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">mual</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">muntah</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">sakit perut</span>
+                        <span class="bg-gray-100 px-2 py-1 rounded">diare</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-4">
+                <button onclick="diagnosisPasien()"
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-stethoscope mr-2"></i>
+                    Diagnosis Penyakit
+                </button>
+                <button onclick="tambahPasienBaru()"
+                    class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-plus mr-2"></i>
+                    Pasien Baru
+                </button>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loadingDiagnosis" class="hidden mt-4 text-center">
+                <div class="inline-flex items-center">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mr-3"></div>
+                    <span class="text-gray-600">Menganalisis gejala dan mendiagnosa penyakit...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="hasilDiagnosis" class="hidden bg-white rounded-lg shadow-md p-6">
+            <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-file-medical-alt mr-2"></i>
+                Hasil Diagnosis
+            </h4>
+
+            <!-- Patient Summary -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <h5 class="font-semibold text-blue-800 mb-3">Ringkasan Pasien</h5>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <span class="text-gray-600">Nama:</span>
+                        <span id="diagnosisNama" class="font-medium text-gray-800 ml-2"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Umur:</span>
+                        <span id="diagnosisUmur" class="font-medium text-gray-800 ml-2"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Tinggi Badan:</span>
+                        <span id="diagnosisTinggi" class="font-medium text-gray-800 ml-2"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnosis Results -->
+            <div class="mb-6">
+                <h5 class="font-semibold text-gray-700 mb-4">Hasil Analisis Penyakit</h5>
+                <div id="daftarDiagnosa" class="space-y-4">
+                    <!-- Hasil diagnosa akan dimasukkan di sini oleh JavaScript -->
+                </div>
+            </div>
+
+            <!-- Recommendation -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <h5 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Rekomendasi Medis:
+                </h5>
+                <p id="rekomendasiText" class="text-yellow-700"></p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>Dibangun dengan Python Flask | Sistem Diagnosis Penyakit Cerdas</p>
+            <p class="mt-1">⚠️ Hasil diagnosis ini hanya sebagai referensi, konsultasi dengan dokter tetap diperlukan
+            </p>
+        </div>
     </div>
 
     <script>
-        // Fungsi untuk kalkulator
-        async function hitung() {
-            const angka1 = document.getElementById('angka1').value;
-            const angka2 = document.getElementById('angka2').value;
-            
-            const response = await fetch('/calculate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    angka1: angka1,
-                    angka2: angka2
-                })
-            });
-            
-            const data = await response.json();
-            document.getElementById('hasilKalkulator').innerHTML = 
-                `Hasil: ${data.result}`;
+        // Fungsi untuk diagnosis penyakit
+        async function diagnosisPasien() {
+            const nama = document.getElementById('namaPasien').value;
+            const umur = document.getElementById('umurPasien').value;
+            const tinggi = document.getElementById('tinggiPasien').value;
+            const gejala = document.getElementById('gejalaInput').value;
+
+            if (!nama || !umur || !tinggi || !gejala) {
+                alert('Mohon lengkapi semua data pasien dan gejala!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingDiagnosis').classList.remove('hidden');
+            document.getElementById('hasilDiagnosis').classList.add('hidden');
+
+            try {
+                const response = await fetch('/diagnosis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nama: nama,
+                        umur: umur,
+                        tinggi: tinggi,
+                        gejala: gejala.split(',').map(g => g.trim()).filter(g => g !== '')
+                    })
+                });
+
+                const data = await response.json();
+
+                // Update UI dengan hasil diagnosis
+                document.getElementById('diagnosisNama').textContent = data.nama;
+                document.getElementById('diagnosisUmur').textContent = data.umur + ' tahun';
+                document.getElementById('diagnosisTinggi').textContent = data.tinggi + ' cm';
+                document.getElementById('rekomendasiText').textContent = data.rekomendasi;
+
+                // Tampilkan hasil diagnosa penyakit
+                const daftarDiagnosa = document.getElementById('daftarDiagnosa');
+                daftarDiagnosa.innerHTML = '';
+
+                if (data.hasil_diagnosa && data.hasil_diagnosa.length > 0) {
+                    data.hasil_diagnosa.forEach((diagnosa, index) => {
+                        const diagnosaCard = document.createElement('div');
+                        diagnosaCard.className = `border rounded-lg p-4 ${index === 0 ? 'border-blue-300 bg-blue-50' : 'border-gray-200 bg-white'
+                            }`;
+
+                        diagnosaCard.innerHTML = `
+                            <div class="flex justify-between items-start mb-3">
+                                <h6 class="font-semibold text-lg ${index === 0 ? 'text-blue-800' : 'text-gray-800'}">
+                                    ${diagnosa.penyakit}
+                                </h6>
+                                <span class="px-3 py-1 rounded-full text-sm font-medium ${diagnosa.persentase > 70 ? 'bg-red-100 text-red-800' :
+                                diagnosa.persentase > 40 ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-green-100 text-green-800'
+                            }">
+                                    ${diagnosa.persentase}% Kecocokan
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-600 mb-2"><strong>Gejala yang Cocok:</strong></p>
+                                    <div class="space-y-1">
+                                        ${diagnosa.gejala_cocok.map(gejala => `
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                                <span class="text-green-700">${gejala}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 mb-2"><strong>Deskripsi:</strong></p>
+                                    <p class="text-gray-700">${diagnosa.deskripsi}</p>
+                                    <p class="text-gray-600 mt-2"><strong>Penanganan:</strong></p>
+                                    <p class="text-gray-700">${diagnosa.penanganan}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        daftarDiagnosa.appendChild(diagnosaCard);
+                    });
+                } else {
+                    daftarDiagnosa.innerHTML = `
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-search fa-2x mb-4"></i>
+                            <p>Tidak ditemukan penyakit yang cocok dengan gejala yang dimasukkan.</p>
+                        </div>
+                    `;
+                }
+
+                // Hide loading, show results
+                document.getElementById('loadingDiagnosis').classList.add('hidden');
+                document.getElementById('hasilDiagnosis').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat memproses diagnosis!');
+                document.getElementById('loadingDiagnosis').classList.add('hidden');
+            }
         }
 
-        // Fungsi untuk processing text
-        async function processText() {
-            const text = document.getElementById('inputText').value;
-            
-            const response = await fetch('/process-text', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text: text
-                })
-            });
-            
-            const data = await response.json();
-            document.getElementById('hasilText').innerHTML = 
-                `Jumlah Kata: ${data.jumlah_kata}<br>
-                 Text Uppercase: ${data.text_upper}`;
+        // Fungsi untuk reset form dan tambah pasien baru
+        function tambahPasienBaru() {
+            document.getElementById('namaPasien').value = '';
+            document.getElementById('umurPasien').value = '';
+            document.getElementById('tinggiPasien').value = '';
+            document.getElementById('gejalaInput').value = '';
+            document.getElementById('hasilDiagnosis').classList.add('hidden');
+            document.getElementById('namaPasien').focus();
+
+            // Tampilkan notifikasi
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg';
+            notification.innerHTML = '<i class="fas fa-check mr-2"></i>Form siap untuk pasien baru';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
+
+        // Enter key support
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('gejalaInput').addEventListener('keypress', function (e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    diagnosisPasien();
+                }
+            });
+        });
     </script>
 </body>
+
 </html>

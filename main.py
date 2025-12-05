@@ -45,7 +45,6 @@ for i in range(ulang):
         
 
 print('\nGejala yang dimasukkan:')
-for x in range(ulang):
-    
-    print()
+for x in range(len(gejala)):
+    print(gejala[x])
         
